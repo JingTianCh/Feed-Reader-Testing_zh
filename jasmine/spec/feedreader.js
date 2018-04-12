@@ -6,6 +6,9 @@
 /* 我们把所有的测试都放在了 $() 函数里面。因为有些测试需要 DOM 元素。
  * 我们得保证在 DOM 准备好之前他们不会被运行。
  */
+/*jquery 中的 $(function(){...}) 就是等价于
+ *$(document).ready(function(){}) 就是保证 DOM 加载完成后再执行里面的函*数
+ */
 $(function() {
     /* 这是我们第一个测试用例 - 其中包含了一定数量的测试。这个用例的测试
      * 都是关于 Rss 源的定义的，也就是应用中的 allFeeds 变量。
@@ -88,8 +91,17 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
     });
-    /* TODO: 13. 写一个叫做 "Initial Entries" 的测试用例 */
-    /* TODO: Write a new test suite named "Initial Entries" */
+    
+    describe('Initial Entries', function () {
+        /* TODO: 13. 写一个叫做 "Initial Entries" 的测试用例 */
+        /* TODO: Write a new test suite named "Initial Entries" */
+
+        beforeEach(function (done) {
+            loadFeed(3, function () {
+                done();
+            });
+
+        });
 
         /* TODO:
          * 写一个测试保证 loadFeed 函数被调用而且工作正常，即在 .feed 容器元素
@@ -104,6 +116,33 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        it('loadFeed', function () {
+
+            var count=$('.feed').find('.entry').length;
+            expect(count).not.toBe(0);
+
+        });
+    });
+    
+    describe('New Feed Selection',function(){
+        var $oldContent,$newContent;
+        beforeEach(function (done) {
+            loadFeed(0, function () {
+                $oldContent = $('.feed').first().text();
+                done();
+            });
+
+        });
+        it('the content actually changes', function (done) {
+            loadFeed(Math.floor(Math.random()*(allFeeds.length-1))+1, function () {
+                $newContent = $('.feed').first().text();
+                done();
+            });
+            expect($newContent).not.toBe($oldContent);
+
+        });
+        
+
 
         /* TODO: 写一个叫做 "New Feed Selection" 的测试用例 */
         /* TODO: Write a new test suite named "New Feed Selection" */
@@ -111,8 +150,10 @@ $(function() {
         /* TODO:
          * 写一个测试保证当用 loadFeed 函数加载一个新源的时候内容会真的改变。
          * 记住，loadFeed() 函数是异步的。
-         *//* TODO: Write a test that ensures when a new feed is loaded
+         */
+        /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        });
 }());
