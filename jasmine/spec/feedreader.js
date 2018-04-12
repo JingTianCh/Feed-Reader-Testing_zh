@@ -20,33 +20,76 @@ $(function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
-
-
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有链接字段而且链接不是空的。
          */
-
+        /* TODO: Write a test that loops through each feed
+         * in the allFeeds object and ensures it has a URL defined
+         * and that the URL is not empty.
+         */
+        it('url of every feed should not null',function(){
+            allFeeds.forEach(function(item){
+                expect(item.url).not.toBeNull();
+            });
+        });
 
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有名字字段而且不是空的。
          */
+        /* TODO: Write a test that loops through each feed
+         * in the allFeeds object and ensures it has a name defined
+         * and that the name is not empty.
+         */
+        it('name of every feed should not null',function(){
+            allFeeds.forEach(function(item){
+                expect(item.name).not.toBeNull();
+            });
+        
+        });
     });
 
+    describe('The menu',function(){
+            var $theBody, $theMune;
+            beforeEach(function () {
+                $theBody = $('body');
+                $theMune = $('.menu-icon-link');
+            });
 
     /* TODO: 写一个叫做 "The menu" 的测试用例 */
-
+    /* TODO: Write a new test suite named "The menu" */
+        it('element is hidden by default',function(){
+            expect($theBody.hasClass('menu-hidden')).toBeTruthy();
+        });
+        //检查css属性的方法
         /* TODO:
          * 写一个测试用例保证菜单元素默认是隐藏的。你需要分析 html 和 css
          * 来搞清楚我们是怎么实现隐藏/展示菜单元素的。
          */
-
+        /* TODO: Write a test that ensures the menu element is
+         * hidden by default. You'll have to analyze the HTML and
+         * the CSS to determine how we're performing the
+         * hiding/showing of the menu element.
+         */
+        it('changes visibility when the menu icon is clicked.',function(){
+            $theMune.trigger('click');
+            expect($theBody.hasClass('menu-hidden')).not.toBeTruthy();
+            //not.toBeTruthy()和toBeFalsy()均可
+            $theMune.trigger('click');
+            expect($theBody.hasClass('menu-hidden')).toBeTruthy();
+        });
          /* TODO:
           * 写一个测试用例保证当菜单图标被点击的时候菜单会切换可见状态。这个
-          * 测试应该包含两个 expectation ： 党点击图标的时候菜单是否显示，
+          * 测试应该包含两个 expectation ： 当点击图标的时候菜单是否显示，
           * 再次点击的时候是否隐藏。
           */
-
+        /* TODO: Write a test that ensures the menu changes
+          * visibility when the menu icon is clicked. This test
+          * should have two expectations: does the menu display when
+          * clicked and does it hide when clicked again.
+          */
+    });
     /* TODO: 13. 写一个叫做 "Initial Entries" 的测试用例 */
+    /* TODO: Write a new test suite named "Initial Entries" */
 
         /* TODO:
          * 写一个测试保证 loadFeed 函数被调用而且工作正常，即在 .feed 容器元素
@@ -55,11 +98,21 @@ $(function() {
          * 记住 loadFeed() 函数是异步的所以这个而是应该使用 Jasmine 的 beforeEach
          * 和异步的 done() 函数。
          */
+        /* TODO: Write a test that ensures when the loadFeed
+         * function is called and completes its work, there is at least
+         * a single .entry element within the .feed container.
+         * Remember, loadFeed() is asynchronous so this test will require
+         * the use of Jasmine's beforeEach and asynchronous done() function.
+         */
 
-    /* TODO: 写一个叫做 "New Feed Selection" 的测试用例 */
+        /* TODO: 写一个叫做 "New Feed Selection" 的测试用例 */
+        /* TODO: Write a new test suite named "New Feed Selection" */
 
         /* TODO:
          * 写一个测试保证当用 loadFeed 函数加载一个新源的时候内容会真的改变。
          * 记住，loadFeed() 函数是异步的。
+         *//* TODO: Write a test that ensures when a new feed is loaded
+         * by the loadFeed function that the content actually changes.
+         * Remember, loadFeed() is asynchronous.
          */
 }());
