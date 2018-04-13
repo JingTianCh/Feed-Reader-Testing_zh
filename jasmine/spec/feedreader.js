@@ -32,7 +32,7 @@ $(function() {
          */
         it('url of every feed should not null',function(){
             allFeeds.forEach(function(item){
-                expect(item.url).not.toBeNull();
+                expect(item.url.length).not.toBe(0);
             });
         });
 
@@ -45,7 +45,7 @@ $(function() {
          */
         it('name of every feed should not null',function(){
             allFeeds.forEach(function(item){
-                expect(item.name).not.toBeNull();
+                expect(item.name.length).not.toBe(0);
             });
         
         });
@@ -75,10 +75,10 @@ $(function() {
          */
         it('changes visibility when the menu icon is clicked.',function(){
             $theMune.trigger('click');
-            expect($theBody.hasClass('menu-hidden')).not.toBeTruthy();
+            expect($theBody.hasClass('menu-hidden')).not.toBe(true);
             //not.toBeTruthy()和toBeFalsy()均可
             $theMune.trigger('click');
-            expect($theBody.hasClass('menu-hidden')).toBeTruthy();
+            expect($theBody.hasClass('menu-hidden')).toBe(true);
         });
          /* TODO:
           * 写一个测试用例保证当菜单图标被点击的时候菜单会切换可见状态。这个
@@ -124,24 +124,24 @@ $(function() {
         });
     });
     
-    describe('New Feed Selection',function(){
-        var $oldContent,$newContent;
+    describe('New Feed Selection', function () {
+        var $oldContent, $newContent;
         beforeEach(function (done) {
             loadFeed(0, function () {
                 $oldContent = $('.feed').first().text();
-                done();
+                loadFeed(Math.floor(Math.random() * (allFeeds.length - 1)) + 1, function () {
+                    $newContent = $('.feed').first().text();
+                    done();
+                });
             });
-
+            //嵌套使用 
         });
-        it('the content actually changes', function (done) {
-            loadFeed(Math.floor(Math.random()*(allFeeds.length-1))+1, function () {
-                $newContent = $('.feed').first().text();
-                done();
-            });
-            expect($newContent).not.toBe($oldContent);
 
-        });
         
+        it('the content actually changes', function () {
+            expect($newContent).not.toBe($oldContent);
+        });
+
 
 
         /* TODO: 写一个叫做 "New Feed Selection" 的测试用例 */
@@ -155,5 +155,5 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        });
-}());
+    });
+    }());
